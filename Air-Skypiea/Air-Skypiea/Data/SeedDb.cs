@@ -22,7 +22,8 @@ namespace Air_Skypiea.Data
             await CheckCountriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Dei", "Romero", "Deirom@yopmail.com", "310 726 8748", "Calle Falsa Calle Perdida", UserType.Admin);
-
+           
+            await CheckUserAsync("1030", "Piccolo", "Daimao", "Picorodaimao@yopmail.com", "31O 897 8049", "Calle Nose Calle Ahi ", UserType.User);
         }
 
         private async Task<User> CheckUserAsync(

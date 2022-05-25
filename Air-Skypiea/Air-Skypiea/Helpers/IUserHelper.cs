@@ -1,4 +1,5 @@
 ﻿using Air_Skypiea.Data.Entities;
+using Air_Skypiea.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Air_Skypiea.Helpers
@@ -14,6 +15,10 @@ namespace Air_Skypiea.Helpers
         Task AddUserToRoleAsync(User user, string roleName);
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
+
+        Task<SignInResult> LoginAsync(LoginViewModel model);
+
+        Task LogoutAsync();
 
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Air_Skypiea.Data;
 using Air_Skypiea.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Air_Skypiea.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
 

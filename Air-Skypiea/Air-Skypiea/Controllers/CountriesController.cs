@@ -1,11 +1,13 @@
 ﻿using Air_Skypiea.Data;
 using Air_Skypiea.Data.Entities;
 using Air_Skypiea.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Air_Skypiea.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CountriesController : Controller
     {
         private readonly DataContext _context;
