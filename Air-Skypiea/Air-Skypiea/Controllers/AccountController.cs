@@ -45,6 +45,12 @@ namespace Air_Skypiea.Controllers
             await _userHelper.LogoutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult NotAuthorized()
+        {
+            return View();
+        }
+
     }
 
 }
