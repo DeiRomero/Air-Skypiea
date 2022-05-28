@@ -13,19 +13,6 @@ namespace Air_Skypiea.Helpers
             _context = context;
         }
     
-        public async Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync()
-        {
-            List<SelectListItem> list = await _context.Categories.Select(c => new SelectListItem
-            {
-                Text = c.Name,
-                Value = c.Id.ToString()
-            })
-                .OrderBy(c => c.Text)
-                .ToListAsync();
-
-            list.Insert(0, new SelectListItem { Text = "[Selecciones una categoria...", Value = "0" });
-            return list;
-        }
 
         public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId)
         {
