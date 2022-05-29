@@ -17,8 +17,7 @@ namespace Air_Skypiea.Data
 
         public async Task SeedAsync()
         {
-            await _context.Database.EnsureCreatedAsync();
-            await CheckCategoriesAsync();
+            await _context.Database.EnsureCreatedAsync();         
             await CheckCountriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Dei", "Romero", "Deirom@yopmail.com", "310 726 8748", "Calle Falsa Calle Perdida", UserType.Admin);
