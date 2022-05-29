@@ -16,7 +16,7 @@ namespace Air_Skypiea.Helpers
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
 
-        Task<SignInResult> LoginAsync(LoginViewModel model);
+        Task<SignInResult> LoginAsync(LoginViewModel model); 
 
         Task LogoutAsync();
 
