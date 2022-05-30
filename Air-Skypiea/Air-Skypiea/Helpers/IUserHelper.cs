@@ -10,6 +10,7 @@ namespace Air_Skypiea.Helpers
 
         Task<User> GetUserAsync(Guid userId);
 
+
         Task<IdentityResult> AddUserAsync(User user, string password);
 
         Task<User> AddUserAsync(AddUserViewModel model);
@@ -28,7 +29,6 @@ namespace Air_Skypiea.Helpers
 
         Task<IdentityResult> UpdateUserAsync(User user);
 
-        Task<User> GetUserAsync(Guid userId);
 
 
     }
