@@ -15,7 +15,5 @@ namespace Air_Skypiea.Data.Entities
 
         [Display(Name = "Departamento/Estados")]
         public int StatesNumber => States == null ? 0 : States.Count;
-
-
     }
 }

@@ -13,6 +13,8 @@ namespace Air_Skypiea.Data.Entities
 
         public State State { get; set; }
 
+        //public ICollection<Travel> travels { get; set; }
+
         public ICollection<User> Users { get; set; }
     }
 }

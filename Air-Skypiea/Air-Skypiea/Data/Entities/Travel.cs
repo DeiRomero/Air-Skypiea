@@ -6,25 +6,20 @@ namespace Air_Skypiea.Data.Entities
     {
         public int Id { get; set; }
 
-        [Display(Name = "Origen")]
-        [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Source { get; set; }
+        public Reservation Reservation { get; set; }
 
-        [Display(Name = "Destino")]
-        [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Destiny { get; set; }
+        public City? Source { get; set; }
+
+        public City? Target { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
         [Display(Name = "Fecha")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public DateTime Data { get; set; }
+        public DateTime Date { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [Display(Name = "Descripción")]
+        [Display(Name = "Comentarios")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        public string Description { get; set; }
-
+        public string Remark { get; set; }
     }
 }

@@ -7,22 +7,15 @@ namespace Air_Skypiea.Data.Entities
     {
         public int Id { get; set; }
 
-        public int Code { get; set; }
+        public Guid Code { get; set; }
 
         public ICollection<User> Users { get; set; }
 
-        //hay 2 formas
-        //[Display(Name = "Estado")]
-        //public Boolean Name { get; set; }
-
-        //[Display(Name = "Estado")]
-        //public OrderStatus OrderStatus { get; set; }
+        public FlightStatus flightStatus { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [Display(Name = "Descripción")]
+        [Display(Name = "Comentarios")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        public string Description { get; set; }
-
-
+        public string Remark { get; set; }
     }
 }

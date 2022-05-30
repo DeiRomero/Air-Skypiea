@@ -17,13 +17,28 @@ namespace Air_Skypiea.Data
 
         public async Task SeedAsync()
         {
-            await _context.Database.EnsureCreatedAsync();         
+            await _context.Database.EnsureCreatedAsync();
+            await CheckFlightsAsync();
             await CheckCountriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Dei", "Romero", "Deirom@yopmail.com", "310 726 8748", "Calle Falsa Calle Perdida", UserType.Admin);
             await CheckUserAsync("1020", "Jen", "Sanchez", "Jensanchez@yopmail.com", "313 708 1677", "Calle Nose Calle Ahi", UserType.Admin);
             await CheckUserAsync("1030", "Santi", "Arias", "Santiarias@yopmail.com", "324 212 9806", "Calle Nose Calle Nose", UserType.Admin);
             await CheckUserAsync("1040", "Piccolo", "Daimao", "Picorodaimao@yopmail.com", "31O 897 8049", "Nameku", UserType.User);
+        }
+
+        private async Task CheckFlightsAsync()
+        {
+            if (!_context.Travels.Any())
+            {
+                _context.Travels.Add(new Travel
+                {
+                    Date = DateTime.Now,
+                    Source = _context.Cities.FirstOrDefault(C => C.Id == 1),
+                    Target = _context.Cities.FirstOrDefault(C => C.Id == 2),
+                });
+                await _context.SaveChangesAsync();
+            }
         }
 
         private async Task<User> CheckUserAsync(
