@@ -30,7 +30,7 @@ namespace Air_Skypiea.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(new LoginViewModel());
+            return View(new LoginViewModel()); 
         }
 
         [HttpPost]
