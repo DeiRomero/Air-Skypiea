@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Air_Skypiea.Data;
 using Air_Skypiea.Data.Entities;
 using Air_Skypiea.Helpers;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Vereyon.Web;
+using Microsoft.Extensions.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,24 +15,21 @@ builder.Services.AddDbContext<DataContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-//TODO: make strongest password
 builder.Services.AddIdentity<User, IdentityRole>(cfg =>
 {
     cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
     cfg.SignIn.RequireConfirmedEmail = true;
     cfg.User.RequireUniqueEmail = true;
-    cfg.Password.RequireDigit = false;
+    cfg.Password.RequireDigit = true;
     cfg.Password.RequiredUniqueChars = 0;
-    cfg.Password.RequireLowercase = false;
-    cfg.Password.RequireNonAlphanumeric = false;
-    cfg.Password.RequireUppercase = false;
+    cfg.Password.RequireLowercase = true;
+    cfg.Password.RequireNonAlphanumeric = true;
+    cfg.Password.RequireUppercase = true;
     cfg.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     cfg.Lockout.MaxFailedAccessAttempts = 3;
     cfg.Lockout.AllowedForNewUsers = true;
-
-
 })
-     .AddDefaultTokenProviders()
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<DataContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -39,11 +38,11 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/NotAuthorized";
 });
 
-
 builder.Services.AddTransient<SeedDb>();
-builder.Services.AddScoped<IUserHelper,UserHelper>();
+builder.Services.AddFlashMessage();
+builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
-builder.Services.AddScoped<IBlobHelper,BlobHelper>();
+builder.Services.AddScoped<IBlobHelper, BlobHelper>();
 builder.Services.AddScoped<IMailHelper, MailHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
@@ -59,7 +58,6 @@ void SeedData()
         SeedDb? service = scope.ServiceProvider.GetService<SeedDb>();
         service.SeedAsync().Wait();
     }
-
 }
 
 if (!app.Environment.IsDevelopment())
