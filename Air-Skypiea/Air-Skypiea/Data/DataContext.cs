@@ -15,6 +15,9 @@ namespace Air_Skypiea.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<State> States { get; set; }
 
+        public DbSet<Travel> Travels { get; set; }
+
+        public DbSet<Reservation> reservations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
