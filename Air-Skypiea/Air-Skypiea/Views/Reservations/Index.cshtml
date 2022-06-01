@@ -1,47 +1,29 @@
 ﻿@model IEnumerable<Air_Skypiea.Data.Entities.Reservation>
 
-@{
-    ViewData["Title"] = "Index";
-}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="Code" class="control-label"></label>
+            <input asp-for="Code" class="form-control" />
+            <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
 
-<h1>Index</h1>
+        <div class="form-group">
+            <label asp-for="flightStatus" class="control-label"></label>
+            <input asp-for="flightStatus" class="form-control" />
+            <span asp-validation-for="flightStatus" class="text-danger"></span>
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.flightStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Remark)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.flightStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remark)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <div class="form-group">
+            <label asp-for="Remark" class="control-label"></label>
+            <input asp-for="Remark" class="form-control" />
+            <span asp-validation-for="Remark" class="text-danger"></span>
+        </div>
+        <td>
+           <a asp-action="Edit" class="btn btn-outline-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+           <a asp-action="Details" class="btn btn-outline-info"><i class="fa-solid fa-circle-info"></i></a>
+           <a asp-action="Delete" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
+        </td>
+        </div>
+    </div>    
+</div>

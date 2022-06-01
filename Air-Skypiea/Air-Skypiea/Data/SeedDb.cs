@@ -18,7 +18,7 @@ namespace Air_Skypiea.Data
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
-            await CheckFlightsAsync();
+           // await CheckTravelsAsync();
             await CheckCountriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Dei", "Romero", "Deirom@yopmail.com", "310 726 8748", "Calle Falsa Calle Perdida", UserType.Admin);
@@ -27,19 +27,19 @@ namespace Air_Skypiea.Data
             await CheckUserAsync("1040", "Piccolo", "Daimao", "Picorodaimao@yopmail.com", "31O 897 8049", "Nameku", UserType.User);
         }
 
-        private async Task CheckFlightsAsync()
-        {
-            if (!_context.Travels.Any())
-            {
-                _context.Travels.Add(new Travel
-                {
-                    Date = DateTime.Now,
-                    Source = _context.Cities.FirstOrDefault(C => C.Id == 1),
-                    Target = _context.Cities.FirstOrDefault(C => C.Id == 2),
-                });
-                await _context.SaveChangesAsync();
-            }
-        }
+        //private async Task CheckTravelsAsync()
+        //{
+        //    if (!_context.Travels.Any())
+        //    {
+        //        _context.Travels.Add(new Travel
+        //        {
+        //            Date = DateTime.Now,
+        //            Source = _context.Cities.FirstOrDefault(C => C.Id == 1),
+        //            Target = _context.Cities.FirstOrDefault(C => C.Id == 2),
+        //        });
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
 
         private async Task<User> CheckUserAsync(
         string document,
