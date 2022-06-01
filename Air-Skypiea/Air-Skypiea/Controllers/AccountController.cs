@@ -358,6 +358,11 @@ namespace Air_Skypiea.Controllers
             return View(model);
         }
 
+        public IActionResult ReservationRegister()
+        {
+            return View();
+        }
+
     }
 
 }

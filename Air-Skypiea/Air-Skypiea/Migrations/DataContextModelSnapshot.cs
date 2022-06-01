@@ -81,14 +81,27 @@ namespace Air_Skypiea.Migrations
                     b.Property<Guid>("Code")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Remark")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("SourceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TargetId")
+                        .HasColumnType("int");
 
                     b.Property<int>("flightStatus")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SourceId");
+
+                    b.HasIndex("TargetId");
 
                     b.ToTable("reservations");
                 });
@@ -396,6 +409,21 @@ namespace Air_Skypiea.Migrations
                         .HasForeignKey("StateId");
 
                     b.Navigation("State");
+                });
+
+            modelBuilder.Entity("Air_Skypiea.Data.Entities.Reservation", b =>
+                {
+                    b.HasOne("Air_Skypiea.Data.Entities.City", "Source")
+                        .WithMany()
+                        .HasForeignKey("SourceId");
+
+                    b.HasOne("Air_Skypiea.Data.Entities.City", "Target")
+                        .WithMany()
+                        .HasForeignKey("TargetId");
+
+                    b.Navigation("Source");
+
+                    b.Navigation("Target");
                 });
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>

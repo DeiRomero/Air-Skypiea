@@ -37,21 +37,6 @@ namespace Air_Skypiea.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "reservations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    flightStatus = table.Column<int>(type: "int", nullable: false),
-                    Remark = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_reservations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -107,6 +92,34 @@ namespace Air_Skypiea.Migrations
                         name: "FK_Cities_States_StateId",
                         column: x => x.StateId,
                         principalTable: "States",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "reservations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    flightStatus = table.Column<int>(type: "int", nullable: false),
+                    Remark = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    SourceId = table.Column<int>(type: "int", nullable: true),
+                    TargetId = table.Column<int>(type: "int", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_reservations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_reservations_Cities_SourceId",
+                        column: x => x.SourceId,
+                        principalTable: "Cities",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_reservations_Cities_TargetId",
+                        column: x => x.TargetId,
+                        principalTable: "Cities",
                         principalColumn: "Id");
                 });
 
@@ -338,6 +351,16 @@ namespace Air_Skypiea.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_reservations_SourceId",
+                table: "reservations",
+                column: "SourceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_reservations_TargetId",
+                table: "reservations",
+                column: "TargetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_States_CountryId",
                 table: "States",
                 column: "CountryId");
@@ -392,10 +415,10 @@ namespace Air_Skypiea.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Cities");
+                name: "reservations");
 
             migrationBuilder.DropTable(
-                name: "reservations");
+                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "States");
