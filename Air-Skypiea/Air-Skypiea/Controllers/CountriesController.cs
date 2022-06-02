@@ -72,26 +72,6 @@ namespace Air_Skypiea.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DetailsCity(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var city = await _context.Cities
-                .Include(c => c.State)             
-                .FirstOrDefaultAsync(c => c.Id == id);
-            if (city == null)
-            {
-                return NotFound();
-            }
-
-            return View(city);
-        }
-
-       
-        [HttpGet]
         [NoDirectAccess]
         public async Task<IActionResult> AddState(int id)
         {
@@ -130,7 +110,7 @@ namespace Air_Skypiea.Controllers
                    .Include(c => c.States)
                    .ThenInclude(s => s.Cities)
                    .FirstOrDefaultAsync(c => c.Id == model.CountyId);
-                    _flashMessage.Info("Registro creado.");
+                    _flashMessage.Confirmation("Registro creado.");
                     return Json(new { isValid = true, html = ModalHelper.RenderRazorViewToString(this, "_ViewAllStates", country) });
                 }
                 catch (DbUpdateException dbUpdateException)
@@ -154,14 +134,10 @@ namespace Air_Skypiea.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddCity(int? id)
+        [NoDirectAccess]
+
+        public async Task<IActionResult> AddCity(int id)
         {
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             State state = await _context.States.FindAsync(id);
             if (state == null)
             {
@@ -191,7 +167,12 @@ namespace Air_Skypiea.Controllers
                     };
                     _context.Add(city);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(DetailsState), new { Id = model.StateId });
+                    State state = await _context.States
+                   .Include(s => s.Cities)
+                   .FirstOrDefaultAsync(c => c.Id == model.StateId);
+                    _flashMessage.Confirmation("Registro creado.");
+                    return Json(new { isValid = true, html = ModalHelper.RenderRazorViewToString(this, "_ViewAllCities", state) });
+
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
@@ -209,9 +190,9 @@ namespace Air_Skypiea.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-            return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "AddCity", model) });
         }
-       
+
         [HttpGet]
         [NoDirectAccess]
         public async Task<IActionResult> EditState(int? id)
@@ -257,7 +238,7 @@ namespace Air_Skypiea.Controllers
                    .ThenInclude(s => s.Cities)
                    .FirstOrDefaultAsync(c => c.Id == model.CountyId);
                     await _context.SaveChangesAsync();
-                    _flashMessage.Confirmation("Registro Actualizazo.");                   
+                    _flashMessage.Confirmation("Registro Actualizado.");                   
                     return Json(new { isValid = true, html = ModalHelper.RenderRazorViewToString(this, "_ViewAllStates", country) });
                 }
                 catch (DbUpdateException dbUpdateException)
@@ -280,14 +261,10 @@ namespace Air_Skypiea.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditCity(int? id)
+        [NoDirectAccess]
+        public async Task<IActionResult> EditCity(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var city = await _context.Cities
+           var city = await _context.Cities
                 .Include(c => c.State)
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (city == null)
@@ -324,8 +301,13 @@ namespace Air_Skypiea.Controllers
                         
                     };
                     _context.Update(city);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(DetailsState), new { Id = model.StateId });
+                     await _context.SaveChangesAsync();
+                     State state = await _context.States
+                    .Include(s => s.Cities)
+                    .FirstOrDefaultAsync(c => c.Id == model.StateId);
+                    _flashMessage.Confirmation("Registro actualizado.");
+                    return Json(new { isValid = true, html = ModalHelper.RenderRazorViewToString(this, "_ViewAllCities", state) });
+
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
@@ -343,7 +325,7 @@ namespace Air_Skypiea.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-            return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "EditCity", model) });
         }
 
         [NoDirectAccess]
@@ -418,7 +400,7 @@ namespace Air_Skypiea.Controllers
                         isValid = true,
                         html = ModalHelper.RenderRazorViewToString(
                             this,
-                            "_ViewAll",
+                            "_ViewAllCountries",
                             _context.Countries
                                 .Include(c => c.States)
                                 .ThenInclude(s => s.Cities)
@@ -445,6 +427,7 @@ namespace Air_Skypiea.Controllers
             return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "AddOrEdit", country) });
         }
 
+        
         [NoDirectAccess]
         public async Task<IActionResult> DeleteState(int? id)
         {
@@ -470,16 +453,10 @@ namespace Air_Skypiea.Controllers
             return RedirectToAction(nameof(Details), new { Id = state.Country.Id });
         }
 
-
-        [HttpGet]
-        public async Task<IActionResult> DeleteCity(int? id)
+        [NoDirectAccess]
+        public async Task<IActionResult> DeleteCity(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var city = await _context.Cities
+            City city = await _context.Cities
                 .Include(c => c.State)
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (city == null)
@@ -487,19 +464,19 @@ namespace Air_Skypiea.Controllers
                 return NotFound();
             }
 
-            return View(city);
+            try
+            {
+                _context.Cities.Remove(city);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                _flashMessage.Danger("No se puede borrar la ciudad porque tiene registros relacionados.");
+            }
+
+            _flashMessage.Info("Registro borrado.");
+            return RedirectToAction(nameof(DetailsState), new { id = city.State.Id });
         }
 
-        [HttpPost, ActionName("DeleteCity")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteCityConfirmed(int id)
-        {
-            var city = await _context.Cities
-                .Include(c => c.State)
-                .FirstOrDefaultAsync(c => c.Id == id);
-            _context.Cities.Remove(city);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(DetailsState), new { Id = city.State.Id });
-        }
     }
 }
