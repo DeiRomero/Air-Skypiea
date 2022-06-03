@@ -99,6 +99,27 @@ namespace Air_Skypiea.Migrations
                     b.ToTable("Flights");
                 });
 
+            modelBuilder.Entity("Air_Skypiea.Data.Entities.FlightImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("FlightId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FlightId");
+
+                    b.ToTable("FlightImages");
+                });
+
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>
                 {
                     b.Property<int>("Id")
@@ -379,6 +400,15 @@ namespace Air_Skypiea.Migrations
                     b.Navigation("Target");
                 });
 
+            modelBuilder.Entity("Air_Skypiea.Data.Entities.FlightImage", b =>
+                {
+                    b.HasOne("Air_Skypiea.Data.Entities.Flight", "Flight")
+                        .WithMany("FlightImages")
+                        .HasForeignKey("FlightId");
+
+                    b.Navigation("Flight");
+                });
+
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>
                 {
                     b.HasOne("Air_Skypiea.Data.Entities.Country", "Country")
@@ -456,6 +486,11 @@ namespace Air_Skypiea.Migrations
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Country", b =>
                 {
                     b.Navigation("States");
+                });
+
+            modelBuilder.Entity("Air_Skypiea.Data.Entities.Flight", b =>
+                {
+                    b.Navigation("FlightImages");
                 });
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>

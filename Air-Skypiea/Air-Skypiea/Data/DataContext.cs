@@ -16,6 +16,9 @@ namespace Air_Skypiea.Data
         public DbSet<State> States { get; set; }
         public DbSet<Flight> Flights { get; set; }
 
+        public DbSet<FlightImage> FlightImages { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
