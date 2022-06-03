@@ -2,7 +2,7 @@
 
 namespace Air_Skypiea.Models
 {
-    public class AddProductImageViewModel
+    public class AddFlightImageViewModel
     {
         public int FlightId { get; set; }
 
