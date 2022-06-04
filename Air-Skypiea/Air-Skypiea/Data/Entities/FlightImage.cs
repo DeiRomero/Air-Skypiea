@@ -13,7 +13,7 @@ namespace Air_Skypiea.Data.Entities
 
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7057/images/noimage.png"
+            ? $"https://localhost:7061/images/noimage.png"
             : $"https://airskypiea.blob.core.windows.net/destinations/{ImageId}";
     }
 }

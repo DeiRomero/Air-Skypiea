@@ -6,7 +6,6 @@
 
 <flash dismissable="true" />
 
-<!-- Content Wrapper. Contains page content -->
 <div class="container-fluid">
     <div class="card mt-2">
         <div class="card-header text-danger">
@@ -23,6 +22,7 @@
 <partial name="_AddOrEditDialog" />
 <partial name="_DeleteDialog" />
 
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
@@ -30,7 +30,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#FlightsTable').DataTable({
+            $('#FlightTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 },
@@ -43,6 +43,6 @@
     </script>
 
     <script>
-        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Flights/Delete/', false);
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Flight/Delete/', false);
     </script>
 }

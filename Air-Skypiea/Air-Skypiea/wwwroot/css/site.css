@@ -65,15 +65,16 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-color:black;
+    background-image:url("../images/Fondos.png")
 }
+
 body {
     margin: 0;
     font-family: var(--bs-body-font-family);
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
     line-height: var(--bs-body-line-height);
-    color: #f00;
+    color: #e44511;
     text-align: var(--bs-body-text-align);
     background-color: var(--bs-body-bg);
     -webkit-text-size-adjust: 100%;
@@ -81,7 +82,7 @@ body {
 }
 .bg-primary-t {
     --bs-bg-opacity: 1;
-    background-color: #000000 !important;
+    background-color: #0a58ca !important;
 }
 
 @charset "utf-8";
@@ -277,15 +278,15 @@ body {
 }
 
 footer {
-    background-color: #000000;
+    background-color: #041e82;
     width: 100%;
     padding-bottom: 5px;
-    color: red;
+    color: #ffc107;
 }
 
 
     footer a:hover {
-        color: #ffca2c;
+        color: #f00;
     }
 
     footer h4 {

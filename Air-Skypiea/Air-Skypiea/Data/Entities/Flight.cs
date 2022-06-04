@@ -6,15 +6,15 @@ namespace Air_Skypiea.Data.Entities
     {
         public int Id { get; set; }
         public City Source  { get; set; }
-        public City? Target { get; set; }
+        public City Target { get; set; }
 
 
+        [DisplayFormat(DataFormatString = "{0:C2}")]
+        [Display(Name = "Precio")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public decimal Price { get; set; }
         public DateTime Date { get; set; }
 
-        [DisplayFormat(DataFormatString ="{0:C2}")]
-        [Display(Name = "Precio")]
-        [Required(ErrorMessage ="El campo {0} es obligatorio.")]
-        public decimal Price { get; set; }
 
         public ICollection<FlightImage> FlightImages { get; set; }
 
@@ -23,7 +23,7 @@ namespace Air_Skypiea.Data.Entities
 
         [Display(Name = "Foto")]
         public string ImageFullPath => FlightImages == null || FlightImages.Count == 0
-            ? $"https://localhost:7161/.azurewebsites.net/images/noimage.png"
+            ? $"https://localhost:7161/images/noimage.png"
             : FlightImages.FirstOrDefault().ImageFullPath;
 
     }

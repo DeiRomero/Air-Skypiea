@@ -23,35 +23,32 @@ namespace Air_Skypiea.Data
             await _context.Database.EnsureCreatedAsync();         
             await CheckCountriesAsync();
             await CheckRolesAsync();
-            await CheckFlightsAsync(new List<string>() { "MuseoOroBogota.png", "Casas-de-Bogota-Colombia.png", "Colibri-en-Bogota.png" });
+            await CheckFlightsAsync();
             await CheckUserAsync("1010", "Dei", "Romero", "Deirom@yopmail.com", "310 726 8748", "Calle Falsa Calle Perdida", UserType.Admin);
             await CheckUserAsync("1020", "Jen", "Sanchez", "Jensanchez@yopmail.com", "313 708 1677", "Calle Nose Calle Ahi", UserType.Admin);
             await CheckUserAsync("1030", "Santi", "Arias", "Santiarias@yopmail.com", "324 212 9806", "Calle Nose Calle Nose", UserType.Admin);
             await CheckUserAsync("1040", "Piccolo", "Daimao", "Picorodaimao@yopmail.com", "31O 897 8049", "Nameku", UserType.User);
         }
 
-        private async Task CheckFlightsAsync(List<string> images)
+        private async Task CheckFlightsAsync()
         {
             if (!_context.Flights.Any())
-            {   Flight flight = new Flight();
-                var myDate = new DateTime(2022,6,20);
+
+            {
+
                 _context.Flights.Add(new Flight
                 {
-                    Date = myDate,
-                    Price = 50000000,
+
                     Source = _context.Cities.FirstOrDefault(c => c.Id == 1),
                     Target = _context.Cities.FirstOrDefault(c => c.Id == 2),
+                    Price = 500000,
+                    Date = new DateTime(2022, 6, 20),
                     FlightImages = new List<FlightImage>()
 
+                    
+
                 });
-
-                //foreach (string image in images)
-                //{
-                //    Guid imageId = await _blobHelper.UploadBlobAsync($"{Environment.CurrentDirectory}\\wwwroot\\images\\Destinations\\{image}", "flights");
-                //    flight.FlightImages.Add(new FlightImage { ImageId = imageId });
-                //}
-
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();  
             }
         }
 
