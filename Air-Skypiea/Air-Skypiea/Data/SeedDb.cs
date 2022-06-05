@@ -1,6 +1,7 @@
 ﻿using Air_Skypiea.Data.Entities;
 using Air_Skypiea.Enums;
 using Air_Skypiea.Helpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Air_Skypiea.Data
 {
@@ -45,11 +46,57 @@ namespace Air_Skypiea.Data
                     Date = new DateTime(2022, 6, 20),
                     FlightImages = new List<FlightImage>()
 
-                    
 
-                });
+
+                }) ;;
+                await _context.SaveChangesAsync();
+
+
+                _context.Flights.Add(new Flight
+                {
+
+                    Source = _context.Cities.FirstOrDefault(c => c.Id == 3),
+                    Target = _context.Cities.FirstOrDefault(c => c.Id == 6),
+                    Price = 300000,
+                    Date = new DateTime(2022, 6, 20),
+                    FlightImages = new List<FlightImage>()
+
+
+
+                }); ;
+                await _context.SaveChangesAsync();
+
+
+                _context.Flights.Add(new Flight
+                {
+
+                    Source = _context.Cities.FirstOrDefault(c => c.Id == 4),
+                    Target = _context.Cities.FirstOrDefault(c => c.Id == 7),
+                    Price = 700000,
+                    Date = new DateTime(2022, 6, 20),
+                    FlightImages = new List<FlightImage>()
+
+
+
+                }); ;
+                await _context.SaveChangesAsync();
+
+                _context.Flights.Add(new Flight
+                {
+
+                    Source = _context.Cities.FirstOrDefault(c => c.Id == 6),
+                    Target = _context.Cities.FirstOrDefault(c => c.Id == 1),
+                    Price = 300000,
+                    Date = new DateTime(2022, 6, 20),
+                    FlightImages = new List<FlightImage>()
+
+
+
+                }); ;
                 await _context.SaveChangesAsync();  
             }
+            
+
         }
 
 
