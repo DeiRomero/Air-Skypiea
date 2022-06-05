@@ -111,38 +111,37 @@ namespace Air_Skypiea.Data
                 {
                     Name = "Cundinamarca",
                     Cities = new List<City>() {
-                        new City() { Name = "Usaquén" },
-                        new City() { Name = "Guatavita" },
-                             new City() { Name = "Parque Nacional Natural Chingaza" },
+                        new City() { Name = "Bogotá" },
+                        
 
                     }
                 },
                 new State()
                 {
-                    Name = "Boyacá",
+                    Name = "Atlántico",
                     Cities = new List<City>() {
-                        new City() { Name = "Villa De Leyva" },
-                        new City() { Name = "Monguí" },
-                         new City() { Name = "Parque Nacional Natura El Cocuy" },
+                        new City() { Name = "Barranquilla" },
+                        new City() { Name = "Santa Marta" },
+                         
 
                     }
                 },
                 new State()
                 {
-                    Name = "Huila",
+                    Name = "Valle del cauca",
                     Cities = new List<City>() {
-                        new City() { Name = "Desierto De La Tatacoa" },
+                        new City() { Name = "Palmira" },
 
                     }
                 },
                 new State()
                 {
-                    Name = "Santander",
+                    Name = "Quindio",
                     Cities = new List<City>() {
 
-                        new City() { Name = "Barichara" },
+                        new City() { Name = "Armenia" },
 
-                        new City() { Name = "San Gil" },
+                       
 
                     }
                 },
@@ -152,87 +151,15 @@ namespace Air_Skypiea.Data
                     Cities = new List<City>() {
 
                         new City() { Name = "Medellín" },
+                        new City() { Name = "Rionegro" },
+
 
                     }
             }
                 }
                 });
-                _context.Countries.Add(new Country
-                {
-                    Name = "Estados Unidos",
-                    States = new List<State>()
-            {
-                new State()
-                {
-                    Name = "Florida",
-                    Cities = new List<City>() {
-                        new City() { Name = "Orlando" },
-
-                    }
-
-            }
-                }
-                });
-                _context.Countries.Add(new Country
-                {
-                    Name = "China",
-                    States = new List<State>()
-            {
-                new State()
-                {
-                    Name = "Shanhaiguan",
-                    Cities = new List<City>() {
-                        new City() { Name = "Golfo de Bohay" },
-                    }
-                },
-
-            }
-                });
-                _context.Countries.Add(new Country
-                {
-                    Name = "Egipto",
-                    States = new List<State>()
-            {
-                new State()
-                {
-                    Name = "El Cairo",
-                    Cities = new List<City>() {
-                        new City() { Name = "Necrópolis de Guiza" },
-                    }
-                },
-
-            }
-                });
-                _context.Countries.Add(new Country
-                {
-                    Name = "Francia",
-                    States = new List<State>()
-            {
-                new State()
-                {
-                    Name = "París",
-                    Cities = new List<City>() {
-                        new City() { Name = "París" },
-                    }
-                },
-
-            }
-                });
-                _context.Countries.Add(new Country
-                {
-                    Name = "México",
-                    States = new List<State>()
-            {
-                new State()
-                {
-                    Name = "Cancún y la Riviera Maya",
-                    Cities = new List<City>() {
-                        new City() { Name = "Playa del Carmen" },
-                    }
-                },
-
-            }
-                });
+               
+              
 
 
                 await _context.SaveChangesAsync();

@@ -12,7 +12,10 @@ namespace Air_Skypiea.Helpers
         {
             _context = context;
         }
-    
+
+
+
+       
 
         public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId)
         {
@@ -28,6 +31,21 @@ namespace Air_Skypiea.Helpers
 
             list.Insert(0, new SelectListItem { Text = "[Selecciones una ciudad...", Value = "0" });
             return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboCitiesFAsync()
+        {
+            List<SelectListItem> list = await _context.Cities.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            })
+              .OrderBy(c => c.Text)
+              .ToListAsync();
+
+            list.Insert(0, new SelectListItem { Text = "[Selecciones una ciudad...", Value = "0" });
+            return list;
+
         }
 
         public async Task<IEnumerable<SelectListItem>> GetComboCountriesAsync()
@@ -59,5 +77,7 @@ namespace Air_Skypiea.Helpers
             list.Insert(0, new SelectListItem { Text = "[Selecciones un Departamento / Estado...", Value = "0" });
             return list;
         }
+
+       
     }
 }
