@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Air_Skypiea.Migrations
 {
-    public partial class Db : Migration
+    public partial class InitialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -243,25 +243,6 @@ namespace Air_Skypiea.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "FlightImages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FlightId = table.Column<int>(type: "int", nullable: true),
-                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FlightImages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FlightImages_Flights_FlightId",
-                        column: x => x.FlightId,
-                        principalTable: "Flights",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -325,11 +306,6 @@ namespace Air_Skypiea.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_FlightImages_FlightId",
-                table: "FlightImages",
-                column: "FlightId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Flights_SourceId_TargetId",
                 table: "Flights",
                 columns: new[] { "SourceId", "TargetId" },
@@ -372,16 +348,13 @@ namespace Air_Skypiea.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "FlightImages");
+                name: "Flights");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Flights");
 
             migrationBuilder.DropTable(
                 name: "Cities");

@@ -15,16 +15,9 @@ namespace Air_Skypiea.Data.Entities
         public decimal Price { get; set; }
         public DateTime Date { get; set; }
 
+        public ICollection<Reservation> Reservations { get; set; }
 
-        public ICollection<FlightImage> FlightImages { get; set; }
 
-        [Display(Name = "Fotos")]
-        public int ImagesNumber => FlightImages == null ? 0 : FlightImages.Count;
-
-        [Display(Name = "Foto")]
-        public string ImageFullPath => FlightImages == null || FlightImages.Count == 0
-            ? $"https://localhost:7161/images/noimage.png"
-            : FlightImages.FirstOrDefault().ImageFullPath;
 
     }
 }

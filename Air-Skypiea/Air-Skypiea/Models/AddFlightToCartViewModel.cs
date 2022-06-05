@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Air_Skypiea.Models
 {
-    public class AddProductToCartViewModel
+    public class AddFlightToCartViewModel
     {
         public int Id { get; set; }
         public City Source { get; set; }
@@ -17,7 +17,6 @@ namespace Air_Skypiea.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public decimal Price { get; set; }
 
-        public ICollection<FlightImage> FlightImages { get; set; }
 
 
         [DataType(DataType.MultilineText)]

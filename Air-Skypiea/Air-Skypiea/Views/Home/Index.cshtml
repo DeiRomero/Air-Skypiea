@@ -1,4 +1,4 @@
-﻿@model Air_Skypiea.Models.HomeViewModel
+﻿@model IEnumerable<Air_Skypiea.Models.FlightsHomeViewModel>
 
 
 @{
@@ -43,17 +43,159 @@ href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 .title{
     color:gray;
     text-align:left;
-    font-size:100px;
-    margin-top:10px;
+    font-size:60px;
+    margin-top:5px;
     font-display:block;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+
     
 </style>
 <body> 
 </body>
 
 <h1 class="title">  Air Skypiea   </h1>
+<br />
+@foreach (var item in Model)
+{
+    <div class="row">
+        @if (item.Flight1 != null)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card_body">
+                        <p class="mt-2">
+
+                            
+                            <h4>
+                                
+                              Origen  @Html.DisplayFor(modelItem => item.Flight1.Source) </h4>
+                        </p>
+                         <p class="mt-2">
+                                
+                             
+                            <h4>
+                              Destino  @Html.DisplayFor(modelItem => item.Flight1.Target)</h4>
+                        </p>
+                        <p class="mt-2">
+                                
+
+                            <h4>
+
+                                @Html.DisplayFor(modelItem => item.Flight1.Price)</h4>
+                        </p>
+                        <p class="mt-2">
+                   
+                            <h4>
+
+                             Fecha  @Html.DisplayFor(modelItem => item.Flight1.Date)</h4>
+                        </p>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Flight1.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Flight1.Id" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+            
+        }
+        @if (item.Flight2 != null)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card_body">
+                        <p class="mt-2">
+                           <h4>
+                               Origen @Html.DisplayFor(modelItem => item.Flight2.Source)</h4>
+                        </p>
+                         <p class="mt-2">
+                            <h4>
+                                Destino @Html.DisplayFor(modelItem => item.Flight2.Target)</h4>
+                        </p>
+                        <p class="mt-2">
+                          <h4>
+                               Precio @Html.DisplayFor(modelItem => item.Flight2.Price)</h4>
+                        </p>
+                        <p class="mt-2">
+                   
+                            <h4>
+
+                             Fecha  @Html.DisplayFor(modelItem => item.Flight1.Date)</h4>
+                        </p>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Flight2.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Flight2.Id" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        }
+         @if (item.Flight3 != null)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card_body">
+                        <p class="mt-2">
+                            <h4>
+                                Origen @Html.DisplayFor(modelItem => item.Flight3.Source)</h4>
+                        </p>
+                         <p class="mt-2">
+                            <h4>
+                                Destino @Html.DisplayFor(modelItem => item.Flight3.Target)</h4>
+                        </p>
+                        <p class="mt-2">
+                            <h4>
+                                Precio @Html.DisplayFor(modelItem => item.Flight3.Price)</h4>
+                        </p>
+                        <p class="mt-2">
+                   
+                            <h4>
+
+                             Fecha  @Html.DisplayFor(modelItem => item.Flight1.Date)</h4>
+                        </p>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Flight3.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Flight3.Id" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        }
+         @if (item.Flight4 != null)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card_body">
+                        <p class="mt-2">
+                            <h4>
+                                Origen @Html.DisplayFor(modelItem => item.Flight4.Source)</h4>
+                        </p>
+                         <p class="mt-2">
+                            <h4>
+                                Destino @Html.DisplayFor(modelItem => item.Flight4.Target)</h4>
+                        </p>
+                        <p class="mt-2">
+                            <h4>
+                                Precio @Html.DisplayFor(modelItem => item.Flight4.Price)</h4>
+                        </p>
+                        <p class="mt-2">
+                   
+                            <h4>
+
+                             Fecha  @Html.DisplayFor(modelItem => item.Flight1.Date)</h4>
+                        </p>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Flight4.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Flight4.Id" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+<br />
 <br />
 
 <div class="container">
@@ -135,10 +277,8 @@ href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
  </div>
  
 
-
-
  <div class="video">
-          <video src="~/images/videopresentacion.mp4" controls autoplay  width="1000" height="800" ></video>
+          <video src="~/images/videopresentacion.mp4" controls   width="1000" height="700" ></video>
     </div>
 <br />
 <footer>

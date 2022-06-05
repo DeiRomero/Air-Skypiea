@@ -44,7 +44,7 @@ namespace Air_Skypiea.Data
                     Target = _context.Cities.FirstOrDefault(c => c.Id == 2),
                     Price = 500000,
                     Date = new DateTime(2022, 6, 20),
-                    FlightImages = new List<FlightImage>()
+                   
 
 
 
@@ -59,7 +59,6 @@ namespace Air_Skypiea.Data
                     Target = _context.Cities.FirstOrDefault(c => c.Id == 6),
                     Price = 300000,
                     Date = new DateTime(2022, 6, 20),
-                    FlightImages = new List<FlightImage>()
 
 
 
@@ -74,7 +73,6 @@ namespace Air_Skypiea.Data
                     Target = _context.Cities.FirstOrDefault(c => c.Id == 7),
                     Price = 700000,
                     Date = new DateTime(2022, 6, 20),
-                    FlightImages = new List<FlightImage>()
 
 
 
@@ -88,7 +86,6 @@ namespace Air_Skypiea.Data
                     Target = _context.Cities.FirstOrDefault(c => c.Id == 1),
                     Price = 300000,
                     Date = new DateTime(2022, 6, 20),
-                    FlightImages = new List<FlightImage>()
 
 
 

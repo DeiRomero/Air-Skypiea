@@ -16,7 +16,8 @@ namespace Air_Skypiea.Data
         public DbSet<State> States { get; set; }
         public DbSet<Flight> Flights { get; set; }
 
-        public DbSet<FlightImage> FlightImages { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+
 
 
 

@@ -12,8 +12,8 @@
     <div class="col-md-12">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Source" />
-            <input type="hidden" asp-for="Target" />
+            <input type="hidden" asp-for="SourceId" />
+            <input type="hidden" asp-for="TargetId" />
 
             <partial name="_CreateFlight"/>
             <div class="form-group mt-2">

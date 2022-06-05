@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Air_Skypiea.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220605040604_Db")]
-    partial class Db
+    [Migration("20220605201230_AddReservation")]
+    partial class AddReservation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,25 +103,32 @@ namespace Air_Skypiea.Migrations
                     b.ToTable("Flights");
                 });
 
-            modelBuilder.Entity("Air_Skypiea.Data.Entities.FlightImage", b =>
+            modelBuilder.Entity("Air_Skypiea.Data.Entities.Reservation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<Guid>("Code")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("FlightId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ImageId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Remark")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("flightStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
 
                     b.HasIndex("FlightId");
 
-                    b.ToTable("FlightImages");
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>
@@ -219,6 +226,9 @@ namespace Air_Skypiea.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("Reservationid")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -243,6 +253,8 @@ namespace Air_Skypiea.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("Reservationid");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -404,10 +416,10 @@ namespace Air_Skypiea.Migrations
                     b.Navigation("Target");
                 });
 
-            modelBuilder.Entity("Air_Skypiea.Data.Entities.FlightImage", b =>
+            modelBuilder.Entity("Air_Skypiea.Data.Entities.Reservation", b =>
                 {
                     b.HasOne("Air_Skypiea.Data.Entities.Flight", "Flight")
-                        .WithMany("FlightImages")
+                        .WithMany("Reservations")
                         .HasForeignKey("FlightId");
 
                     b.Navigation("Flight");
@@ -427,6 +439,10 @@ namespace Air_Skypiea.Migrations
                     b.HasOne("Air_Skypiea.Data.Entities.City", "City")
                         .WithMany("Users")
                         .HasForeignKey("CityId");
+
+                    b.HasOne("Air_Skypiea.Data.Entities.Reservation", null)
+                        .WithMany("Users")
+                        .HasForeignKey("Reservationid");
 
                     b.Navigation("City");
                 });
@@ -494,7 +510,12 @@ namespace Air_Skypiea.Migrations
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Flight", b =>
                 {
-                    b.Navigation("FlightImages");
+                    b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("Air_Skypiea.Data.Entities.Reservation", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>
