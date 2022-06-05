@@ -10,5 +10,7 @@ namespace Air_Skypiea.Helpers
 
         Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId);
 
+        Task<IEnumerable<SelectListItem>> GetComboCitiesFAsync();
+
     }
 }

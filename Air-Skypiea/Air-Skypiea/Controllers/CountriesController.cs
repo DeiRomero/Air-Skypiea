@@ -15,11 +15,13 @@ namespace Air_Skypiea.Controllers
     {
         private readonly DataContext _context;
         private readonly IFlashMessage _flashMessage;
+        private readonly IBlobHelper _blobHelper;
 
-        public CountriesController(DataContext context, IFlashMessage flashMessage)
+        public CountriesController(DataContext context, IFlashMessage flashMessage, IBlobHelper blobHelper)
         {
             _context = context;
             _flashMessage = flashMessage;
+            _blobHelper = blobHelper;
         }
 
         [HttpGet]
