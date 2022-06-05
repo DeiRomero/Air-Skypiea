@@ -17,7 +17,7 @@ namespace Air_Skypiea.Data
 
         public DbSet<Travel> Travels { get; set; }
 
-        public DbSet<Reservation> reservations { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,8 +25,8 @@ namespace Air_Skypiea.Data
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<State>().HasIndex("Name","CountryId").IsUnique();
             modelBuilder.Entity<City>().HasIndex("Name", "StateId").IsUnique();
+            //modelBuilder.Entity<Reservation>().HasIndex("Name", "CityId").IsUnique();
         }
     }
-
 }
 

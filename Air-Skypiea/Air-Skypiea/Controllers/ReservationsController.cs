@@ -7,33 +7,39 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Air_Skypiea.Data;
 using Air_Skypiea.Data.Entities;
+using Air_Skypiea.Helpers;
+using Vereyon.Web;
 
 namespace Air_Skypiea.Controllers
 {
     public class ReservationsController : Controller
     {
         private readonly DataContext _context;
-
-        public ReservationsController(DataContext context)
+        private readonly ICombosHelper _combosHelper;
+        private readonly IBlobHelper _blobHelper;
+        public ReservationsController(DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper)
         {
             _context = context;
+            _combosHelper = combosHelper;
+            _blobHelper = blobHelper;
+
         }
 
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
-              return View(await _context.reservations.ToListAsync());
+            return View(await _context.Reservations.ToListAsync());
         }
 
         // GET: Reservations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.reservations == null)
+            if (id == null || _context.Reservations == null)
             {
                 return NotFound();
             }
 
-            var reservation = await _context.reservations
+            var reservation = await _context.Reservations
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reservation == null)
             {
@@ -68,12 +74,12 @@ namespace Air_Skypiea.Controllers
         // GET: Reservations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.reservations == null)
+            if (id == null || _context.Reservations == null)
             {
                 return NotFound();
             }
 
-            var reservation = await _context.reservations.FindAsync(id);
+            var reservation = await _context.Reservations.FindAsync(id);
             if (reservation == null)
             {
                 return NotFound();
@@ -119,12 +125,12 @@ namespace Air_Skypiea.Controllers
         // GET: Reservations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.reservations == null)
+            if (id == null || _context.Reservations == null)
             {
                 return NotFound();
             }
 
-            var reservation = await _context.reservations
+            var reservation = await _context.Reservations
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reservation == null)
             {
@@ -139,14 +145,14 @@ namespace Air_Skypiea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.reservations == null)
+            if (_context.Reservations == null)
             {
                 return Problem("Entity set 'DataContext.reservations'  is null.");
             }
-            var reservation = await _context.reservations.FindAsync(id);
+            var reservation = await _context.Reservations.FindAsync(id);
             if (reservation != null)
             {
-                _context.reservations.Remove(reservation);
+                _context.Reservations.Remove(reservation);
             }
             
             await _context.SaveChangesAsync();
@@ -155,7 +161,7 @@ namespace Air_Skypiea.Controllers
 
         private bool ReservationExists(int id)
         {
-          return _context.reservations.Any(e => e.Id == id);
+          return _context.Reservations.Any(e => e.Id == id);
         }
     }
 }

@@ -103,7 +103,7 @@ namespace Air_Skypiea.Migrations
 
                     b.HasIndex("TargetId");
 
-                    b.ToTable("reservations");
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>
@@ -438,7 +438,7 @@ namespace Air_Skypiea.Migrations
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Travel", b =>
                 {
                     b.HasOne("Air_Skypiea.Data.Entities.Reservation", "Reservation")
-                        .WithMany()
+                        .WithMany("Travels")
                         .HasForeignKey("ReservationId");
 
                     b.HasOne("Air_Skypiea.Data.Entities.City", "Source")
@@ -532,6 +532,8 @@ namespace Air_Skypiea.Migrations
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Reservation", b =>
                 {
+                    b.Navigation("Travels");
+
                     b.Navigation("Users");
                 });
 

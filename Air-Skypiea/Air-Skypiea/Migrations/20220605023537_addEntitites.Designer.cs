@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Air_Skypiea.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220601213415_AddEntities")]
-    partial class AddEntities
+    [Migration("20220605023537_addEntitites")]
+    partial class addEntitites
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,7 +105,7 @@ namespace Air_Skypiea.Migrations
 
                     b.HasIndex("TargetId");
 
-                    b.ToTable("reservations");
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>
@@ -440,7 +440,7 @@ namespace Air_Skypiea.Migrations
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Travel", b =>
                 {
                     b.HasOne("Air_Skypiea.Data.Entities.Reservation", "Reservation")
-                        .WithMany()
+                        .WithMany("Travels")
                         .HasForeignKey("ReservationId");
 
                     b.HasOne("Air_Skypiea.Data.Entities.City", "Source")
@@ -534,6 +534,8 @@ namespace Air_Skypiea.Migrations
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Reservation", b =>
                 {
+                    b.Navigation("Travels");
+
                     b.Navigation("Users");
                 });
 

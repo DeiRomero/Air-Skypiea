@@ -1,19 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Air_Skypiea.Data.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace Air_Skypiea.Data.Entities
+namespace Air_Skypiea.Models
 {
-    public class Travel
+    public class EditTravelViewModel
     {
         public int Id { get; set; }
-
-        public Reservation Reservation { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
         [Display(Name = "Fecha")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DateTime Date { get; set; }
 
-        [Display(Name = "Origen")]
         public City Source { get; set; }
 
         [Display(Name = "Destino")]
@@ -25,4 +23,3 @@ namespace Air_Skypiea.Data.Entities
         public string Remark { get; set; }
     }
 }
-
