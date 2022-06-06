@@ -24,39 +24,46 @@ namespace Air_Skypiea.Controllers
 
         public async Task<IActionResult> Index()
         {
+            List<Travel>? travels = await _context.Travels
+                .ToListAsync();
+
+            List<ProductsHomeViewModel> productsHome = new() { new ProductsHomeViewModel() };
+            int i = 1;
+            foreach (Travel? travel in travels)
             {
-                List<Travel>? travels = await _context.Travels
-                    .ToListAsync();
-
-                List<ProductsHomeViewModel> productsHome = new() { new ProductsHomeViewModel() };
-                int i = 1;
-                foreach (Travel? travel in travels)
+                if (i == 1)
                 {
-                    if (i == 1)
-                    {
-                        productsHome.LastOrDefault().Travel1 = travel;
-                    }
-                    if (i == 2)
-                    {
-                        productsHome.LastOrDefault().Travel2 = travel;
-                    }
-                    if (i == 3)
-                    {
-                        productsHome.LastOrDefault().Travel3 = travel;
-                    }
-                    if (i == 4)
-                    {
-                        productsHome.LastOrDefault().Travel4 = travel;
-                        productsHome.Add(new ProductsHomeViewModel());
-                        i = 0;
-                    }
-                    i++;
+                    productsHome.LastOrDefault().Travel1 = travel;
                 }
-
-                return View(productsHome);
+                if (i == 2)
+                {
+                    productsHome.LastOrDefault().Travel2 = travel;
+                }
+                if (i == 3)
+                {
+                    productsHome.LastOrDefault().Travel3 = travel;
+                }
+                if (i == 4)
+                {
+                    productsHome.LastOrDefault().Travel4 = travel;
+                    productsHome.Add(new ProductsHomeViewModel());
+                    i = 0;
+                }
+                i++;
             }
 
+            HomeViewModel model = new() { Products = productsHome };
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user != null)
+            {
+                model.Quantity = await _context.Reservations
+                    .Where(ts => ts.User.Id == user.Id)
+                    .SumAsync(ts => ts.Quantity);
+            }
+
+            return View(model);
         }
+
 
         public IActionResult Privacy()
         {
@@ -75,47 +82,47 @@ namespace Air_Skypiea.Controllers
             return View();
         }
 
-        //public async Task<IActionResult> Add(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (!User.Identity.IsAuthenticated)
-        //    {
-        //        return RedirectToAction("Login", "Account");
-        //    }
-
-        //    //Product product = await _context.Products.FindAsync(id);
-        //    //if (product == null)
-        //    //{
-        //    //    return NotFound();
-        //    //}
-
-        //    User user = await _userHelper.GetUserAsync(User.Identity.Name);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    //TemporalSale temporalSale = new()
-        //    //{
-        //    //    Product = product,
-        //    //    Quantity = 1,
-        //    //    User = user
-        //    //};
-
-        //    //_context.TemporalSales.Add(temporalSale);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        public async Task<IActionResult> ShowCart()
+        public async Task<IActionResult> Add(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            Travel travel = await _context.Travels.FindAsync(id);
+            if (travel == null)
+            {
+                return NotFound();
+            }
+
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            Reservation reservation = new()
+            {
+                Travel = travel,
+                Quantity = 1,
+                User = user
+            };
+
+            _context.Reservations.Add(reservation);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
+
+        //public async Task<IActionResult> ShowCart()
+        //{
+
+        //    return View();
+        //}
 
         //[Authorize]
         //public async Task<IActionResult> ShowCart()

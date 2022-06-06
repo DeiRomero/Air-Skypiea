@@ -2,8 +2,8 @@
 {
     public class HomeViewModel
     {
-       // public ICollection<Category> Categories { get; set; }
+        public ICollection<ProductsHomeViewModel> Products { get; set; }
 
-        //public float Quantity { get; set; }
+        public float Quantity { get; set; }
     }
 }
