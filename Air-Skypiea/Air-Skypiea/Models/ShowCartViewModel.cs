@@ -8,10 +8,12 @@ namespace Air_Skypiea.Models
     {
         public int Id { get; set; }
 
+        public User User { get; set; }
+
         [Display(Name = "Codigo")]
         public Guid Code { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
 
         [Display(Name = "Estado del vuelo")]
         public FlightStatus flightStatus { get; set; }

@@ -4,85 +4,126 @@
     ViewData["Title"] = "Cart";
 }
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 
-
-@*<div class="row">
+<div class="row">
     <div class="col-md-4">
         <dl class="row">
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Quantity)
+@*            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Code)
             </dt>
             <dd class="col-sm-8">
-                <h3>@Html.DisplayFor(model => model.Quantity)</h3>
+                <h3>@Html.DisplayFor(model => model.Code)</h3>
             </dd>
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Value)
+                @Html.DisplayNameFor(model => model.Date)
             </dt>
             <dd class="col-sm-8">
-                <h3>@Html.DisplayFor(model => model.Value)</h3>
+                <h3>@Html.DisplayFor(model => model.Date)</h3>
             </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Source)
+            </dt>
+            <dd class="col-sm-8">
+                <h3>@Html.DisplayFor(model => model.Source)</h3>
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Target)
+            </dt>
+            <dd class="col-sm-8">
+                <h3>@Html.DisplayFor(model => model.Target)</h3>
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Remark)
+            </dt>
+            <dd class="col-sm-8">
+                <h3>@Html.DisplayFor(model => model.Remark)</h3>
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.flightStatus)
+            </dt>
+            <dd class="col-sm-8">
+                <h3>@Html.DisplayFor(model => model.flightStatus)</h3>
+            </dd>*@
         </dl>
     </div>
     <div class="col-md-8">
-        <div class="col-md-12">
-            <form asp-action="ShowCart">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Remarks" class="control-label"></label>
-                    <input asp-for="Remarks" class="form-control" />
-                    <span asp-validation-for="Remarks" class="text-danger"></span>
-                </div>
-                <div class="form-group mt-2">
-                    <input type="submit" value="Confirmar Pedido" class="btn btn-outline-primary" />
-                    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
-                </div>
-            </form>
-        </div>
+            <div class="col-md-12">
+                <form asp-action="ShowCart">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@*                    <div class="form-group">
+                        <label asp-for="Remark" class="control-label"></label>
+                        <input asp-for="Remark" class="form-control" />
+                        <span asp-validation-for="Remark" class="text-danger"></span>
+                    </div>*@
+@*                    <div class="form-group mt-2">
+                        <input type="submit" value="Confirmar Pedido" class="btn btn-outline-primary" />
+                        <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+                    </div>*@
+                </form>
+            </div>
     </div>
-</div>*@
+</div>
 
 
-@*<div class="row">
+<div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Carro de Compras</h3>
+                <h3 class="panel-title">Reservaciónes</h3>
             </div>
             <div class="panel-body">
                 <table class="table table-hover table-responsive table-striped" id="MyTable">
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Code)
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Code)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.flightStatus)
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Travel.Date)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Source)
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Travel.Source)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Target)
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Travel.Target)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Date)
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Travel.Remark)
                             </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().flightStatus)
+                            </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Reservations)
                         {
                             <tr>
+@*                                <td>
+                                    <div class="zoom">
+                                        <img src="@item.Travel.ImageFullPath" style="width:100px;" />
+                                    </div>
+                                </td>*@
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Product.Name)
+                                    @Html.DisplayFor(modelItem => item.Code)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Remarks)
+                                    @Html.DisplayFor(modelItem => item.Travel.Date)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Product.Price)
+                                    @Html.DisplayFor(modelItem => item.Travel.Source)
                                 </td>
-
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Travel.Target)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Travel.Remark)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.flightStatus)
+                                </td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a>
                                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Borrar</a>
@@ -98,7 +139,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -115,4 +156,4 @@
     </script>
 }
 
-*@
+

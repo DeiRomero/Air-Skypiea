@@ -94,35 +94,28 @@ namespace Air_Skypiea.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //public async Task<IActionResult> ShowCart()
-        //{
+        [Authorize]
+        public async Task<IActionResult> ShowCart()
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    return View();
-        //}
+            List<Reservation>? reservations = await _context.Reservations
+                .Include(ts => ts.Travel)
+                .Where(ts => ts.User.Id == user.Id)
+                .ToListAsync();
 
-        //[Authorize]
-        //public async Task<IActionResult> ShowCart()
-        //{
-        //    User user = await _userHelper.GetUserAsync(User.Identity.Name);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+            ShowCartViewModel model = new()
+            {
+                User = user,
+                Reservations = reservations,
+            };
 
-        //    List<TemporalSale>? temporalSales = await _context.TemporalSales
-        //        .Include(ts => ts.Product)
-        //        .ThenInclude(p => p.ProductImages)
-        //        .Where(ts => ts.User.Id == user.Id)
-        //        .ToListAsync();
-
-        //    ShowCartViewModel model = new()
-        //    {
-        //        User = user,
-        //        TemporalSales = temporalSales,
-        //    };
-
-        //    return View(model);
-        //}
+            return View(model);
+        }
 
     }
 }
