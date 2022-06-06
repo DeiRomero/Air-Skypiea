@@ -24,35 +24,10 @@ namespace Air_Skypiea.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<Travel>? travels = await _context.Travels
+            List<Travel> products = await _context.Travels
                 .ToListAsync();
 
-            List<ProductsHomeViewModel> productsHome = new() { new ProductsHomeViewModel() };
-            int i = 1;
-            foreach (Travel? travel in travels)
-            {
-                if (i == 1)
-                {
-                    productsHome.LastOrDefault().Travel1 = travel;
-                }
-                if (i == 2)
-                {
-                    productsHome.LastOrDefault().Travel2 = travel;
-                }
-                if (i == 3)
-                {
-                    productsHome.LastOrDefault().Travel3 = travel;
-                }
-                if (i == 4)
-                {
-                    productsHome.LastOrDefault().Travel4 = travel;
-                    productsHome.Add(new ProductsHomeViewModel());
-                    i = 0;
-                }
-                i++;
-            }
-
-            HomeViewModel model = new() { Products = productsHome };
+            HomeViewModel model = new() { Products = products };
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user != null)
             {
@@ -63,6 +38,7 @@ namespace Air_Skypiea.Controllers
 
             return View(model);
         }
+
 
 
         public IActionResult Privacy()
