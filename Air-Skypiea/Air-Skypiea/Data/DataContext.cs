@@ -18,6 +18,8 @@ namespace Air_Skypiea.Data
 
         public DbSet<Reservation> Reservations { get; set; }
 
+        public DbSet<TemporalFightSale> TemporalFlights { get; set; }
+
 
 
 

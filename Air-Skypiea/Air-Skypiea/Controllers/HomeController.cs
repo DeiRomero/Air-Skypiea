@@ -1,5 +1,6 @@
 ﻿using Air_Skypiea.Data;
 using Air_Skypiea.Data.Entities;
+using Air_Skypiea.Helpers;
 using Air_Skypiea.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,13 @@ namespace Air_Skypiea.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
 
-        public HomeController(ILogger<HomeController> logger, DataContext context)
+        public HomeController(ILogger<HomeController> logger, DataContext context,IUserHelper userHelper)
         {
             _logger = logger;
             _context = context;
+            _userHelper = userHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -51,9 +54,58 @@ namespace Air_Skypiea.Controllers
                 i++;
             }
 
-            return View(flightsHome);
+            HomeViewModel model = new() { Flights = flightsHome };
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user != null)
+            {
+                model.Quantity = await _context.TemporalFlights
+                    .Where(ts => ts.User.Id == user.Id)
+                    .SumAsync(ts => ts.Quantity);
+            }
+
+            return View(model);
+
+
+            
         
         }
+        public async Task<IActionResult> Add(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            Flight flight = await _context.Flights.FindAsync(id);
+            if (flight == null)
+            {
+                return NotFound();
+            }
+
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            TemporalFightSale temporalSale = new()
+            {
+                Flight = flight,
+                Quantity = 1,
+                User = user
+            };
+
+            _context.TemporalFlights.Add(temporalSale);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
         public IActionResult Privacy()
         {
