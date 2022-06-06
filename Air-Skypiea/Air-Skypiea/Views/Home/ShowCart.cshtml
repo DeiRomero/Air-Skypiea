@@ -1,22 +1,52 @@
-﻿@model IEnumerable<Air_Skypiea.Data.Entities.Reservation>
-
+﻿@model Air_Skypiea.Models.ShowCartViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Cart";
 }
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 
-<h1>Reservación</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-outline-primary">Nueva Reservación</a>
-</p>
-<div class="row">
+@*<div class="row">
+    <div class="col-md-4">
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+            <dd class="col-sm-8">
+                <h3>@Html.DisplayFor(model => model.Quantity)</h3>
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Value)
+            </dt>
+            <dd class="col-sm-8">
+                <h3>@Html.DisplayFor(model => model.Value)</h3>
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-8">
+        <div class="col-md-12">
+            <form asp-action="ShowCart">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Remarks" class="control-label"></label>
+                    <input asp-for="Remarks" class="form-control" />
+                    <span asp-validation-for="Remarks" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Confirmar Pedido" class="btn btn-outline-primary" />
+                    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>*@
+
+
+@*<div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Destinos</h3>
+                <h3 class="panel-title">Carro de Compras</h3>
             </div>
             <div class="panel-body">
                 <table class="table table-hover table-responsive table-striped" id="MyTable">
@@ -35,12 +65,8 @@
                                 @Html.DisplayNameFor(model => model.Target)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Remark)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.Date)
                             </th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,27 +74,18 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Code)
+                                    @Html.DisplayFor(modelItem => item.Product.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.flightStatus)
+                                    @Html.DisplayFor(modelItem => item.Remarks)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Source)
+                                    @Html.DisplayFor(modelItem => item.Product.Price)
                                 </td>
+
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Target)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Remark)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Date)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Borrar</a>
                                 </td>
                             </tr>
                         }
@@ -81,7 +98,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -97,3 +114,5 @@
         });
     </script>
 }
+
+*@

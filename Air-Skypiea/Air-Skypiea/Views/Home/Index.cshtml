@@ -1,8 +1,83 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Air_Skypiea.Models.ProductsHomeViewModel>
+
+@{
+    ViewData["Title"] = "Index";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@foreach (var item in Model)
+{
+    <div class="row">
+        @if (item.Travel1 != null)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card_title">@item.Travel1.Source</div>
+                    <div class="card_body">
+                        <p class="mt-2">
+                            @item.Travel1.Date
+                            <h4>@Html.DisplayFor(modelItem => item.Travel1.Remark)</h4>
+                        </p>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Travel1.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Travel1.Id" class="btn btn-primary">Agregar</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (item.Travel2 != null)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card_title">@item.Travel2.Source</div>
+                    <div class="card_body">
+                        <p class="mt-2">
+                            @item.Travel2.Date
+                            <h4>@Html.DisplayFor(modelItem => item.Travel2.Remark)</h4>
+                        </p>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Travel2.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Travel2.Id" class="btn btn-primary">Agregar</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (item.Travel3 != null)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card_title">@item.Travel3.Source</div>
+                    <div class="card_body">
+                        <p class="mt-2">
+                            @item.Travel3.Date
+                            <h4>@Html.DisplayFor(modelItem => item.Travel3.Remark)</h4>
+                        </p>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Travel3.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Travel3.Id" class="btn btn-primary">Agregar</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (item.Travel4 != null)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card_title">@item.Travel4.Source</div>
+                    <div class="card_body">
+                        <p class="mt-2">
+                            @item.Travel4.Date
+                            <h4>@Html.DisplayFor(modelItem => item.Travel4.Remark)</h4>
+                        </p>
+                    </div>
+                    <div class="card_foot">
+                        <a asp-action="Details" asp-route-id="@item.Travel4.Id" class="btn btn-secondary">Detalles</a>
+                        <a asp-action="Add" asp-route-id="@item.Travel4.Id" class="btn btn-primary">Agregar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

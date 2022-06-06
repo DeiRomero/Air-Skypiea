@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Air_Skypiea.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220605023537_addEntitites")]
-    partial class addEntitites
+    [Migration("20220605233924_addshowcart")]
+    partial class addshowcart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,17 +83,11 @@ namespace Air_Skypiea.Migrations
                     b.Property<Guid>("Code")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Remark")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("SourceId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TargetId")
+                    b.Property<int?>("TravelId")
                         .HasColumnType("int");
 
                     b.Property<int>("flightStatus")
@@ -101,9 +95,7 @@ namespace Air_Skypiea.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SourceId");
-
-                    b.HasIndex("TargetId");
+                    b.HasIndex("TravelId");
 
                     b.ToTable("Reservations");
                 });
@@ -150,9 +142,6 @@ namespace Air_Skypiea.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("ReservationId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SourceId")
                         .HasColumnType("int");
 
@@ -160,8 +149,6 @@ namespace Air_Skypiea.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ReservationId");
 
                     b.HasIndex("SourceId");
 
@@ -415,17 +402,11 @@ namespace Air_Skypiea.Migrations
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Reservation", b =>
                 {
-                    b.HasOne("Air_Skypiea.Data.Entities.City", "Source")
-                        .WithMany()
-                        .HasForeignKey("SourceId");
+                    b.HasOne("Air_Skypiea.Data.Entities.Travel", "Travel")
+                        .WithMany("Reservations")
+                        .HasForeignKey("TravelId");
 
-                    b.HasOne("Air_Skypiea.Data.Entities.City", "Target")
-                        .WithMany()
-                        .HasForeignKey("TargetId");
-
-                    b.Navigation("Source");
-
-                    b.Navigation("Target");
+                    b.Navigation("Travel");
                 });
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>
@@ -439,10 +420,6 @@ namespace Air_Skypiea.Migrations
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Travel", b =>
                 {
-                    b.HasOne("Air_Skypiea.Data.Entities.Reservation", "Reservation")
-                        .WithMany("Travels")
-                        .HasForeignKey("ReservationId");
-
                     b.HasOne("Air_Skypiea.Data.Entities.City", "Source")
                         .WithMany()
                         .HasForeignKey("SourceId");
@@ -450,8 +427,6 @@ namespace Air_Skypiea.Migrations
                     b.HasOne("Air_Skypiea.Data.Entities.City", "Target")
                         .WithMany()
                         .HasForeignKey("TargetId");
-
-                    b.Navigation("Reservation");
 
                     b.Navigation("Source");
 
@@ -534,14 +509,17 @@ namespace Air_Skypiea.Migrations
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Reservation", b =>
                 {
-                    b.Navigation("Travels");
-
                     b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>
                 {
                     b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("Air_Skypiea.Data.Entities.Travel", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

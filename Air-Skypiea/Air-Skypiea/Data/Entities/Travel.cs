@@ -6,7 +6,7 @@ namespace Air_Skypiea.Data.Entities
     {
         public int Id { get; set; }
 
-        public Reservation Reservation { get; set; }
+
 
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
         [Display(Name = "Fecha")]
@@ -23,6 +23,8 @@ namespace Air_Skypiea.Data.Entities
         [Display(Name = "Comentarios")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         public string Remark { get; set; }
+
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }
 
