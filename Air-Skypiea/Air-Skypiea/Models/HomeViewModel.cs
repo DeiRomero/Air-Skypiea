@@ -8,7 +8,7 @@ namespace Air_Skypiea.Models
 
 
         public ICollection<City> Cities { get; set; }
-        public float Quantity { get; set; }
+       
     }
 
 }

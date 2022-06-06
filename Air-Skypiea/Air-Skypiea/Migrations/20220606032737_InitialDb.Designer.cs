@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Air_Skypiea.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220605201230_AddReservation")]
-    partial class AddReservation
+    [Migration("20220606032737_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
