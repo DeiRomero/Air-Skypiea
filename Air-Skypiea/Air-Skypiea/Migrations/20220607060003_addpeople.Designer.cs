@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Air_Skypiea.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220606060132_addentities")]
-    partial class addentities
+    [Migration("20220607060003_addpeople")]
+    partial class addpeople
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,6 +72,32 @@ namespace Air_Skypiea.Migrations
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("Air_Skypiea.Data.Entities.People", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<int>("Document")
+                        .HasMaxLength(50)
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeDocument")
+                        .HasMaxLength(50)
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Peoples");
+                });
+
             modelBuilder.Entity("Air_Skypiea.Data.Entities.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -99,11 +125,16 @@ namespace Air_Skypiea.Migrations
                     b.Property<int>("flightStatus")
                         .HasColumnType("int");
 
+                    b.Property<int?>("peopleid")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TravelId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("peopleid");
 
                     b.ToTable("Reservations");
                 });
@@ -413,9 +444,15 @@ namespace Air_Skypiea.Migrations
                         .WithMany()
                         .HasForeignKey("UserId");
 
+                    b.HasOne("Air_Skypiea.Data.Entities.People", "people")
+                        .WithMany()
+                        .HasForeignKey("peopleid");
+
                     b.Navigation("Travel");
 
                     b.Navigation("User");
+
+                    b.Navigation("people");
                 });
 
             modelBuilder.Entity("Air_Skypiea.Data.Entities.State", b =>

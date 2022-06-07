@@ -116,6 +116,5 @@ namespace Air_Skypiea.Controllers
 
             return View(model);
         }
-
     }
 }

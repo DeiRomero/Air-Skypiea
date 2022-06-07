@@ -77,6 +77,8 @@ namespace Air_Skypiea.Controllers
                 {
                     Remark = model.Remark,
                     Date = model.Date,
+                    //Source = await _context.Cities.FirstAsync(model.SourceId),
+                    //Source = await _context.Cities.FirstAsync(model.SourceId)
                 };
 
                 //if (imageId != Guid.Empty)

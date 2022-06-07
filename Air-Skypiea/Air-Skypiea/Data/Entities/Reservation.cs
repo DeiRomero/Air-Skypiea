@@ -12,6 +12,8 @@ namespace Air_Skypiea.Data.Entities
 
         public User User { get; set; }
 
+        public People people { get; set; }
+
         public Travel Travel { get; set; }
 
         [Display(Name = "Estado del vuelo")]
