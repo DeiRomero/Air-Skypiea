@@ -2,6 +2,7 @@
 using Air_Skypiea.Data.Entities;
 using Air_Skypiea.Helpers;
 using Air_Skypiea.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -58,7 +59,7 @@ namespace Air_Skypiea.Controllers
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user != null)
             {
-                model.Quantity = await _context.TemporalFlights
+                model.Quantity = await _context.Reservations
                     .Where(ts => ts.User.Id == user.Id)
                     .SumAsync(ts => ts.Quantity);
             }
@@ -93,16 +94,45 @@ namespace Air_Skypiea.Controllers
                 return NotFound();
             }
 
-            TemporalFightSale temporalSale = new()
+            Reservation reservation = new()
             {
                 Flight = flight,
                 Quantity = 1,
                 User = user
             };
 
-            _context.TemporalFlights.Add(temporalSale);
+            _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ShowCart()
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+
+
+            List<Reservation>? reservations = await _context.Reservations
+            .Include(ts => ts.Flight)
+            .Where(ts => ts.User.Id == user.Id)
+            .ToListAsync();
+
+
+
+            ShowCartViewModel model = new()
+            {
+                User = user,
+                Reservations = reservations,
+            };
+
+
+
+            return View(model);
         }
 
 

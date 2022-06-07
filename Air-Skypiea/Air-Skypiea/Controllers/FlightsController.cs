@@ -59,8 +59,8 @@ namespace Air_Skypiea.Controllers
                     Price = model.Price,
                     Date = model.Date,
                     Source= await _context.Cities.FindAsync(model.SourceId),
-                    Target= await _context.Cities.FindAsync(model.TargetId)
-
+                    Target= await _context.Cities.FindAsync(model.TargetId),
+                   
 
 
                 };
@@ -138,27 +138,26 @@ namespace Air_Skypiea.Controllers
             
             return View(flight);
         }
-       
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
+        public async Task<IActionResult> Delete(int id)
+        {
             Flight flight = await _context.Flights
-                
+
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (flight == null)
             {
                 return NotFound();
             }
 
-            return View(flight);
+
+            _context.Flights.Remove(flight);
+            await _context.SaveChangesAsync();
+            _flashMessage.Info("Registro borrado.");
+            return RedirectToAction(nameof(Index));
         }
 
-      
-        }
+
+    }
 
 
 

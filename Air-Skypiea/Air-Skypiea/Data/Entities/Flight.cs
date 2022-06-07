@@ -17,6 +17,11 @@ namespace Air_Skypiea.Data.Entities
 
         public ICollection<Reservation> Reservations { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Comentarios")]
+        [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        public string Remark { get; set; }
+
 
 
     }
