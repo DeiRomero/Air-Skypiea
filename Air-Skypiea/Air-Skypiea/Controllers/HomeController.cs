@@ -1,4 +1,5 @@
-﻿using Air_Skypiea.Data;
+﻿using Air_Skypiea.Common;
+using Air_Skypiea.Data;
 using Air_Skypiea.Data.Entities;
 using Air_Skypiea.Helpers;
 using Air_Skypiea.Models;
@@ -14,12 +15,14 @@ namespace Air_Skypiea.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
+        private readonly IReservationsHelper _reservationsHelper;
 
-        public HomeController(ILogger<HomeController> logger, DataContext context,IUserHelper userHelper)
+        public HomeController(ILogger<HomeController> logger, DataContext context,IUserHelper userHelper,IReservationsHelper reservationsHelper)
         {
             _logger = logger;
             _context = context;
             _userHelper = userHelper;
+            _reservationsHelper = reservationsHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -136,6 +139,110 @@ namespace Air_Skypiea.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ShowCart(ShowCartViewModel model)
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            model.User = user;
+            model.Reservations = await _context.Reservations
+                .Include(ts => ts.Flight)
+                .Where(ts => ts.User.Id == user.Id)
+                .ToListAsync();
+
+            Response response = await _reservationsHelper.ProcessOrderAsync(model);
+            if (response.IsSuccess)
+            {
+                return RedirectToAction(nameof(OrderSuccess));
+            }
+
+            ModelState.AddModelError(string.Empty, response.Message);
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Reservation reservation = await _context.Reservations.FindAsync(id);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            EditReservationViewModel model = new()
+            {
+                Id = reservation.id,
+                Remark = reservation.Remark,
+
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, EditReservationViewModel model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Reservation reservation = await _context.Reservations.FindAsync(id);
+                   
+                    reservation.Remark = model.Remark;
+                    _context.Update(reservation);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                    return View(model);
+                }
+
+                return RedirectToAction(nameof(ShowCart));
+            }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Reservation reservation = await _context.Reservations.FindAsync(id);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            _context.Reservations.Remove(reservation);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ShowCart));
+        }
+
+
+        [Authorize]
+        public IActionResult OrderSuccess()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

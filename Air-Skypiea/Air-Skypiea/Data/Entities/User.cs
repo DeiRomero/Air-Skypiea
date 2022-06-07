@@ -24,6 +24,8 @@ namespace Air_Skypiea.Data.Entities
         [Display(Name = "Ciudad")]
         public City City { get; set; }
 
+        public ICollection<Sale> Sales { get; set; }
+
         [Display(Name = "Dirección")]
         [MaxLength(200, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]

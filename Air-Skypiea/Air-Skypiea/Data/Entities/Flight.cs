@@ -15,6 +15,9 @@ namespace Air_Skypiea.Data.Entities
         public decimal Price { get; set; }
         public DateTime Date { get; set; }
 
+
+        public ICollection<SaleDetail> SaleDetails { get; set; }
+
         public ICollection<Reservation> Reservations { get; set; }
 
         [DataType(DataType.MultilineText)]

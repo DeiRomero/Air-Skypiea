@@ -172,6 +172,7 @@ table.dataTable thead .sorting {
     color: black;
     display: flex;
     text-align: center;
+    
 }
 
 /* Absolute Center Spinner */
