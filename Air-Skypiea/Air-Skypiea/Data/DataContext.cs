@@ -18,7 +18,7 @@ namespace Air_Skypiea.Data
 
         public DbSet<Reservation> Reservations { get; set; }
 
-        public DbSet<People> Peoples { get; set; }
+        //public DbSet<People> Peoples { get; set; }
         public DbSet<Sale> Sales { get; set; }
 
         public DbSet<SaleDetail> SaleDetails { get; set; }

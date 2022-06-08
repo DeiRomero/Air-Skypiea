@@ -127,8 +127,9 @@ namespace Air_Skypiea.Controllers
             }
 
             Flight flight = await _context.Flights
-                
-               
+
+                .Include(f=>f.Source)
+                .Include(f=>f.Target)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (flight == null)
             {

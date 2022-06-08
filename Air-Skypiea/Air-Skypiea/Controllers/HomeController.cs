@@ -16,13 +16,19 @@ namespace Air_Skypiea.Controllers
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
         private readonly IReservationsHelper _reservationsHelper;
+        private readonly IBlobHelper _blobHelper;
+        private readonly IMailHelper _mailHelper;
+        private readonly ICombosHelper _combosHelper;
 
-        public HomeController(ILogger<HomeController> logger, DataContext context,IUserHelper userHelper,IReservationsHelper reservationsHelper)
+        public HomeController(ILogger<HomeController> logger, DataContext context,IUserHelper userHelper,IReservationsHelper reservationsHelper,IBlobHelper blobHelper,IMailHelper mailHelper,ICombosHelper combosHelper)
         {
             _logger = logger;
             _context = context;
             _userHelper = userHelper;
             _reservationsHelper = reservationsHelper;
+            _blobHelper = blobHelper;
+            _mailHelper = mailHelper;
+            _combosHelper = combosHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -122,6 +128,9 @@ namespace Air_Skypiea.Controllers
 
             List<Reservation>? reservations = await _context.Reservations
             .Include(ts => ts.Flight)
+            .ThenInclude(r=>r.Source)
+            
+             
             .Where(ts => ts.User.Id == user.Id)
             .ToListAsync();
 
@@ -130,6 +139,7 @@ namespace Air_Skypiea.Controllers
             ShowCartViewModel model = new()
             {
                 User = user,
+               
                 Reservations = reservations,
             };
 
@@ -152,6 +162,7 @@ namespace Air_Skypiea.Controllers
             model.User = user;
             model.Reservations = await _context.Reservations
                 .Include(ts => ts.Flight)
+             
                 .Where(ts => ts.User.Id == user.Id)
                 .ToListAsync();
 
@@ -243,7 +254,73 @@ namespace Air_Skypiea.Controllers
         {
             return View();
         }
+         public async Task<IActionResult> Register()
+        {
+            AddUserViewModel model = new()
+            {
+                Id = Guid.Empty.ToString(),
+                Countries = await _combosHelper.GetComboCountriesAsync(),
+                States = await _combosHelper.GetComboStatesAsync(0),
+                Cities = await _combosHelper.GetComboCitiesAsync(0),
+                
+            };
 
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = Guid.Empty;
+
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+
+                model.ImageId = imageId;
+                User user = await _userHelper.AddUserAsync(model);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    model.Countries = await _combosHelper.GetComboCountriesAsync();
+                    model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
+                    model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
+                    return View(model);
+                }
+
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
+
+                Response response = _mailHelper.SendMail(
+                    $"{model.FirstName} {model.LastName}",
+                    model.Username,
+                    "Air-Skypiea - Confirmación de Email",
+                    $"<h1>Air-Skypiea - Confirmación de Email</h1>" +
+                        $"Para habilitar el usuario por favor hacer click en el siguiente link:, " +
+                        $"<hr/><br/><p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
+                if (response.IsSuccess)
+                {
+                    ViewBag.Message = "Las instrucciones para habilitar el usuario han sido enviadas al correo.";
+                    return View(model);
+                }
+
+                ModelState.AddModelError(string.Empty, response.Message);
+
+            }
+
+            model.Countries = await _combosHelper.GetComboCountriesAsync();
+            model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
+            model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
+            return View(model);
+        }
         public IActionResult Privacy()
         {
             return View();

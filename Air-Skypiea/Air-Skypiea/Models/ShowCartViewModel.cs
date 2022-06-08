@@ -1,4 +1,5 @@
-﻿using Air_Skypiea.Data.Entities;
+﻿
+using Air_Skypiea.Data.Entities;
 using Air_Skypiea.Enums;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,12 +18,12 @@ namespace Air_Skypiea.Models
         [Display(Name = "Codigo")]
         public Guid Code { get; set; }
 
-        public People People { get; set; }
+
 
 
         public ICollection<Reservation> Reservations { get; set; }
 
-        public string Username { get; set; }
+        
 
         [Display(Name = "Estado del vuelo")]
         public FlightStatus flightStatus { get; set; }

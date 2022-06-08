@@ -50,8 +50,8 @@
 
             <form asp-action="ShowCart" enctype="multipart/form-data">
                 <input type="hidden" asp-for="Id" />
-                @*<input type="hidden" asp-for="DocumentType" />*@
-                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+               
+                @* <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                   <div class="form-group">
                     <span class="required">*</span>
                     <label asp-for="FullName" class="control-label"></label>
@@ -63,7 +63,11 @@
                     <label asp-for="Document" class="control-label"></label>
                     <input asp-for="Document" class="form-control" />
                     <span asp-validation-for="Document" class="text-danger"></span>
-                </div>
+                </div>*@
+
+                  <div class="form-group mt-2">
+                        <a asp-action="Register" class="btn btn-secondary"><i class="fa-solid fa-circle-plus"></i> Agregue los datos de la persona que va a viajar</a>
+                    </div>
                  
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
@@ -113,11 +117,8 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Flight.Remark)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().flightStatus)
-                            </th>
+                           
                                <th>
-                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().People)
                             </th>
                             <th></th>
 
@@ -127,11 +128,7 @@
                         @foreach (var item in Model.Reservations)
                         {
                             <tr>
-@*                                <td>
-                                    <div class="zoom">
-                                        <img src="@item.Travel.ImageFullPath" style="width:100px;" />
-                                    </div>
-                                </td>*@
+                        
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Code)
                                 </td>
@@ -147,11 +144,8 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Flight.Remark)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.flightStatus)
-                                </td>
+                              
                                  <td>
-                                    @Html.DisplayFor(modelItem => item.People)
                                 </td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-outline-warning">
