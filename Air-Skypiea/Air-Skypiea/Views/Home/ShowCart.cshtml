@@ -1,0 +1,191 @@
+﻿@model Air_Skypiea.Models.ShowCartViewModel
+
+@{
+    ViewData["Title"] = "Cart";
+}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
+    <link rel="stylesheet" href="~/lib/Font-Awesome/css/regular.min.css">
+    <link rel="stylesheet" href="~/lib/Font-Awesome/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/boostrap/1.9.0/js/bootstrap-datepicker.min.js"></script>
+</head>
+
+
+<div class="row">
+    <div class="col-md-4">
+       <dl class="row">
+           <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Code)
+            </dt>
+            <dd class="col-sm-8">
+                <h4>@Html.DisplayFor(model => model.Code)</h4>
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+            <dd class="col-sm-8">
+                <h4>@Html.DisplayFor(model => model.Date)</h4>
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Source)
+            </dt>
+            <dd class="col-sm-8">
+                <h4>@Html.DisplayFor(model => model.Source)</h4>
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Target)
+            </dt>
+            <dd class="col-sm-8">
+                <h4>@Html.DisplayFor(model => model.Target)</h4>
+            </dd>
+            
+        </dl>
+    </div>
+
+    <div class="col-md-8">
+        <div class="col-md-12">
+
+            <form asp-action="ShowCart" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+               
+                @* <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                  <div class="form-group">
+                    <span class="required">*</span>
+                    <label asp-for="FullName" class="control-label"></label>
+                    <input asp-for="FullName" class="form-control" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                 </div>
+                  <div class="form-group">
+                    <span class="required">*</span>
+                    <label asp-for="Document" class="control-label"></label>
+                    <input asp-for="Document" class="form-control" />
+                    <span asp-validation-for="Document" class="text-danger"></span>
+                </div>*@
+
+                  <div class="form-group mt-2">
+                        <a asp-action="Register" class="btn btn-secondary"><i class="fa-solid fa-circle-plus"></i> Agregue los datos de la persona que va a viajar</a>
+                    </div>
+                 
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Remark" class="control-label"></label>
+                    <input asp-for="Remark" class="form-control" />
+                    <span asp-validation-for="Remark" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <button type="submit" value="Confirmar Compra del vuelo" class="btn btn-outline-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+                            <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+                            <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+                            <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+                        </svg> Comprar
+                        </button>
+                    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Vuelos Reservados</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="MyTable">
+                    <thead>
+                       <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Code)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Flight.Date)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Flight.Source)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Flight.Target)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Reservations.FirstOrDefault().Flight.Remark)
+                            </th>
+                           
+                               <th>
+                            </th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Reservations)
+                        {
+                            <tr>
+                        
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Code)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Flight.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Flight.Source)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Flight.Target)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Flight.Remark)
+                                </td>
+                              
+                                 <td>
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-outline-warning">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                        </svg></a>
+                                    <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-outline-danger">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-backspace-reverse" viewBox="0 0 16 16">
+                                            <path d="M9.854 5.146a.5.5 0 0 1 0 .708L7.707 8l2.147 2.146a.5.5 0 0 1-.708.708L7 8.707l-2.146 2.147a.5.5 0 0 1-.708-.708L6.293 8 4.146 5.854a.5.5 0 1 1 .708-.708L7 7.293l2.146-2.147a.5.5 0 0 1 .708 0z"/>
+                                        <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7.08a2 2 0 0 0 1.519-.698l4.843-5.651a1 1 0 0 0 0-1.302L10.6 1.7A2 2 0 0 0 9.08 1H2zm7.08 1a1 1 0 0 1 .76.35L14.682 8l-4.844 5.65a1 1 0 0 1-.759.35H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h7.08z"/>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "Todos"]
+                ]
+            });
+             
+
+    </script>
+   
+}

@@ -15,7 +15,15 @@ namespace Air_Skypiea.Data.Entities
         public decimal Price { get; set; }
         public DateTime Date { get; set; }
 
+
+        public ICollection<SaleDetail> SaleDetails { get; set; }
+
         public ICollection<Reservation> Reservations { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Comentarios")]
+        [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        public string Remark { get; set; }
 
 
 
