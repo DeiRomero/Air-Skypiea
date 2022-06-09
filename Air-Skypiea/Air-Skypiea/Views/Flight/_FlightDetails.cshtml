@@ -1,0 +1,31 @@
+﻿@model Air_Skypiea.Data.Entities.Flight
+
+<h4>Vuelos</h4>
+<hr />
+<dl class="row">
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Source)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Source)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Target)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Target)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Price)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Price)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Date)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Date)
+    </dd>
+</dl>
+

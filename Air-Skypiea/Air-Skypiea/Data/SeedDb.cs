@@ -82,9 +82,7 @@ namespace Air_Skypiea.Data
                    Source = _context.Cities.FirstOrDefault(c => c.Id == 1),
                    Target = _context.Cities.FirstOrDefault(c => c.Id == 2),
                    Price = 100000,
-                   Date = new DateTime (2022,6,20),
-                   FlightImages = new List<FlightImage>()
-
+                   Date = new DateTime (2022,6,20),                 
 
                 });
 
