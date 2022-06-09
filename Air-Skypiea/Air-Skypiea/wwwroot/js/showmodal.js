@@ -6,7 +6,6 @@
             $('#form-modal .modal-body').html(res);
             $('#form-modal .modal-title').html(title);
             $('#form-modal').modal('show');
-           
         }
     })
 }
@@ -24,7 +23,7 @@ jQueryAjaxPost = form => {
                     $('#view-all').html(res.html)
                     $('#form-modal .modal-body').html('');
                     $('#form-modal .modal-title').html('');
-                    $('#form-modal').modal('hide')
+                    $('#form-modal').modal('hide');
                     // reload the table         
                     location.reload()
 

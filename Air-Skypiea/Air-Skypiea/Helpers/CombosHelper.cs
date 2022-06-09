@@ -29,7 +29,7 @@ namespace Air_Skypiea.Helpers
                 .OrderBy(c => c.Text)
                 .ToListAsync();
 
-            list.Insert(0, new SelectListItem { Text = "[Selecciones una ciudad...", Value = "0" });
+            list.Insert(0, new SelectListItem { Text = "[Selecciones una ciudad...]", Value = "0" });
             return list;
         }
 
@@ -58,7 +58,7 @@ namespace Air_Skypiea.Helpers
                .OrderBy(c => c.Text)
                .ToListAsync();
 
-            list.Insert(0, new SelectListItem { Text = "[Selecciones un país...", Value = "0" });
+            list.Insert(0, new SelectListItem { Text = "[Selecciones un país...]", Value = "0" });
             return list;
         }
 
@@ -74,7 +74,7 @@ namespace Air_Skypiea.Helpers
                 .OrderBy(c => c.Text)
                 .ToListAsync();
 
-            list.Insert(0, new SelectListItem { Text = "[Selecciones un Departamento / Estado...", Value = "0" });
+            list.Insert(0, new SelectListItem { Text = "[Selecciones un Departamento / Estado...]", Value = "0" });
             return list;
         }
 

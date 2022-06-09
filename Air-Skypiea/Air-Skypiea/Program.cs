@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Vereyon.Web;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 

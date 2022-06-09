@@ -64,6 +64,7 @@ html {
 }
 
 body {
+<<<<<<< HEAD
     margin-bottom: 60px;
     background-image:url("../images/Fondos.png")
 }
@@ -333,6 +334,7 @@ table.dataTable thead .sorting {
     margin: 0 6px 0 0;
 }
 
+
 footer {
     background-color: #041e82;
     width: 100%;
@@ -371,4 +373,3 @@ footer {
     footer .contacts .laws a {
             display: block;
     }
-    

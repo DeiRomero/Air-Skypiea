@@ -16,6 +16,10 @@ namespace Air_Skypiea.Data.Entities
         [Display(Name = "Departamento/Estados")]
         public int StatesNumber => States == null ? 0 : States.Count;
 
+        [Display(Name = "Ciudades")]
+        public int CitiesNumber => States == null ? 0 : States.Sum(s => s.CitiesNumber);
+
+
 
     }
 }
