@@ -128,9 +128,11 @@ namespace Air_Skypiea.Controllers
 
             List<Reservation>? reservations = await _context.Reservations
             .Include(ts => ts.Flight)
-            .ThenInclude(r=>r.Source)
-            
-             
+            //.ThenInclude(r => r.Target)
+            .ThenInclude(r => r.Source)
+
+
+
             .Where(ts => ts.User.Id == user.Id)
             .ToListAsync();
 

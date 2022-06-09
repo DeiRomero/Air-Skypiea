@@ -13,18 +13,18 @@
     <div class="row">
        
         <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4">
-                <div class="card-body d-flex align-items-center justify-content-between"><h5>Vuelos <span class="badge bg-light text-dark">@ViewBag.FlightsCount</span> </h5> <i class="fa-solid fa-3x fa-tags"></i></div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
+            <div class="panel bg-warning text-white mb-4">
+                <div class="panel-body d-flex align-items-center justify-content-between"><h5>Vuelos <span class="badge bg-light text-dark">@ViewBag.FlightsCount</span> </h5> <i class="fa-solid fa-3x fa-tags"></i></div>
+                <div class="panel-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href=@Url.Action("Index","Flights")>Ver Vuelos</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body d-flex align-items-center justify-content-between"><h5>Usuarios <span class="badge bg-light text-dark">@ViewBag.UsersCount</span> </h5>  <i class="fa-solid fa-3x fa-users"></i> </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
+            <div class="panel bg-success text-white mb-4">
+                <div class="panel-body d-flex align-items-center justify-content-between"><h5>Usuarios <span class="badge bg-light text-dark">@ViewBag.UsersCount</span> </h5>  <i class="fa-solid fa-3x fa-users"></i> </div>
+                <div class="panel-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href=@Url.Action("Index","Users")>Ver Usuarios</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
@@ -35,11 +35,11 @@
 </div>
 
 <div class="container">
-    <div class="card">
-        <h5 class="card-header">
+    <div class="panel">
+        <h5 class="panel-header">
             <i class="fa-solid fa-tags text-danger"></i> Vuelos agregados a la reserva
         </h5>
-    <div class="card-body">
+    <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
 
